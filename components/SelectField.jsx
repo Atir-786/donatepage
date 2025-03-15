@@ -15,7 +15,8 @@ const SelectField = ({ label, value, onChange, options, error }) => (
       ))}
     </select>
     {/* errro is{error} */}
-    {error && <ErrorMessage text={error} />}
+    {error && <p className="text-red-500 text-sm">{error}</p>}
   </div>
 );
+
 export default SelectField;

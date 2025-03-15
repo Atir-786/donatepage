@@ -39,9 +39,9 @@ export default function DonationForm() {
     if (tab === "initial") {
       const isValid = validateInitialDetails();
       if (isValid) setTab("donation");
-    } else if (tab === "donation" && amount) {
+    } else if (tab === "donation" && amount && amount > 0) {
       setTab("personal");
-    } else if (!amount) {
+    } else if (!amount || amount == 0) {
       setErrors({ ...errors, amount: "Amount is required" });
     }
   };
@@ -203,13 +203,20 @@ export default function DonationForm() {
             onEdit={() => setTab("donation")}
           >
             <input
-              type="number"
+              type="text"
               placeholder="Amount"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                if (/^\d*\.?\d*$/.test(newValue)) {
+                  setAmount(newValue);
+                }
+              }}
               className="w-full p-2 border rounded mb-2"
             />
-            {errors.amount && <ErrorMessage text={errors.amount} />}
+            {errors.amount && (
+              <p className="text-red-500 text-sm">{errors.amount}</p>
+            )}
             <Button
               onClick={handleNext}
               text="Proceed to Personal Information →"
@@ -242,7 +249,6 @@ export default function DonationForm() {
     </div>
   );
 }
-
 const ErrorMessage = ({ text }) => (
   <p className="text-red-500 text-sm">{text}</p>
 );
