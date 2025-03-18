@@ -3,20 +3,17 @@ import Form from "../components/Form";
 
 export default function page() {
   return (
-    <div
-      className="flex flex-col lg:flex-row gap-6 p-6 bg-cover bg-center min-h-screen"
-      style={{ backgroundImage: "url('/background.jpg')" }}
-    >
+    <div className="flex flex-col lg:flex-row gap-6 p-2 md:p-4 lg:p-6 bg-cover bg-center min-h-screen">
       {/* Left Section - Donation Form */}
-      <div className="flex-1 bg-white shadow-lg rounded-lg p-6">
+      <div className="flex-1 bg-white shadow-lg rounded-lg p-2 md:p-4 lg:p-6">
         {/* Initial Details Section */}
         <Form />
         {/* Donation Support Section */}
-        <div className="mt-4 bg-white shadow-lg rounded-lg p-6">
+        <div className="mt-4 bg-white shadow-lg rounded-lg p-2 md:p-4 lg:p-6">
           <h2 className="text-lg font-semibold mb-4">
             What does your generous donation support?
           </h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {[
               { label: "Child Development", icon: "👶" },
               { label: "Livelihood Support", icon: "💜" },
@@ -27,10 +24,10 @@ export default function page() {
             ].map((item, index) => (
               <button
                 key={index}
-                className="flex items-center justify-center gap-2 p-4 border rounded-lg  transition"
+                className="flex items-center justify-center gap-2 p-4 border rounded-lg transition bg-white shadow-sm hover:bg-gray-100 active:scale-95"
               >
-                <span>{item.icon}</span>
-                <span>{item.label}</span>
+                <span className="text-lg">{item.icon}</span>
+                <span className="font-medium">{item.label}</span>
               </button>
             ))}
           </div>

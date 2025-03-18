@@ -6,6 +6,10 @@ import PaymentSuccess from "./PaymentSuccess";
 import Step from "./Step";
 import SelectField from "./SelectField";
 import Button from "./Button";
+const currencies = JSON.parse(process.env.NEXT_PUBLIC_CURRENCIES) || [];
+const programs = JSON.parse(process.env.NEXT_PUBLIC_PROGRAMS) || [];
+const projects = JSON.parse(process.env.NEXT_PUBLIC_PROJECTS) || [];
+// console.log(currencies);
 export default function DonationForm() {
   const [tab, setTab] = useState("initial");
   const [currency, setCurrency] = useState("");
@@ -98,6 +102,7 @@ export default function DonationForm() {
   };
   const processPayment = async () => {
     // e.preventDefault();
+    console.log(currency);
     try {
       const orderId = await createOrderId();
       // console.log("order id is ", orderId);
@@ -106,8 +111,12 @@ export default function DonationForm() {
         amount: parseFloat(amount) * 100,
         currency: currency,
         name: formData.name,
-        description: program,
+        description: "Donation Payment",
         order_id: orderId,
+        notes: {
+          program: program,
+          project: project,
+        },
         handler: async function (response) {
           const data = {
             orderCreationId: orderId,
@@ -150,7 +159,7 @@ export default function DonationForm() {
     }
   };
   return (
-    <div className="mx-auto p-6 space-y-6 border rounded-lg shadow-lg">
+    <div className="mx-auto p-2 md:p-4 lg:p-6 space-y-6 border rounded-lg shadow-lg">
       <Script
         id="razorpay-checkout-js"
         src="https://checkout.razorpay.com/v1/checkout.js"
@@ -175,7 +184,7 @@ export default function DonationForm() {
               label="Choose your currency"
               value={currency}
               onChange={setCurrency}
-              options={["INR", "USD", "EUR"]}
+              options={currencies}
               error={errors.currency}
             />
 
@@ -183,14 +192,14 @@ export default function DonationForm() {
               label="Select a program"
               value={program}
               onChange={setProgram}
-              options={["Youth Development", "Education"]}
+              options={programs}
               error={errors.program}
             />
             <SelectField
               label="Select a project"
               value={project}
               onChange={setProject}
-              options={["Project A", "Project B"]}
+              options={projects}
               error={errors.project}
             />
             <Button onClick={handleNext} text="Choose an Amount →" />
