@@ -40,15 +40,16 @@ export default function page() {
         <h2 className="text-lg font-semibold mb-4">OTHER WAYS TO DONATE</h2>
         {paymentMethods.map((method, index) => (
           <div key={index} className="flex flex-col items-center my-10 ">
-            <button className="bg-[#e36955] text-white px-8 py-2 rounded ">
+            <button className="bg-[#e36955] text-white px-4 py-2 rounded ">
               {method.name}
             </button>
 
             <Image
               src={method.qr}
               alt={`${method.name} QR`}
-              height={200}
-              width={200}
+              height={100}
+              width={500}
+              className="my-2"
             />
           </div>
         ))}
